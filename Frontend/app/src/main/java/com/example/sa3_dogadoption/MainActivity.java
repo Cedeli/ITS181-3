@@ -1,74 +1,75 @@
 package com.example.sa3_dogadoption;
 
+import static java.lang.Integer.parseInt;
+
 import android.os.Bundle;
+import android.content.Intent;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
+
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.sa3_dogadoption.model.User;
-import com.example.sa3_dogadoption.retrofit.RetrofitService;
-import com.example.sa3_dogadoption.retrofit.UserAPI;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.example.sa3_dogadoption.adapter.DogAdapter;
+import com.example.sa3_dogadoption.model.Dog;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    @Override
+    private RecyclerView recyclerView;
+    private DogAdapter dogAdapter;
+    private List<Dog> dogList;
+
+    private Button registerButton;
+
+
+
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        initializeComponents();
-    }
+        recyclerView = findViewById(R.id.listDog);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-    private void initializeComponents(){
-        EditText input_username = findViewById(R.id.email);
-        EditText input_email = findViewById(R.id.username);
-        Button btn_Add = findViewById(R.id.btn_Add);
+        // Make use of the back end to propagate dogs
+        // Propagate cards in RecyclerView
+        dogList = new ArrayList<>();
+        dogAdapter = new DogAdapter(this, dogList);
 
-        RetrofitService retrofitService = new RetrofitService();
-        UserAPI userAPI = retrofitService.getRetrofit().create(UserAPI.class);
+        dogList.add(new Dog("Duglas", "Happy Dog", "hq720"));
+        dogList.add(new Dog("Bob", "Sad Dog", "dog"));
+        dogList.add(new Dog("Max", "Angry Dog", "dug"));
 
-        btn_Add.setOnClickListener(view ->{
-            String username = String.valueOf(input_username.getText());
-            String email = String.valueOf(input_email.getText());
+        dogAdapter = new DogAdapter(this, dogList);
+        recyclerView.setAdapter(dogAdapter);
 
-            User user = new User();
-            user.setUsername(username);
-            user.setEmail(email);
-
-            userAPI.save(user)
-                    .enqueue(new Callback<User>() {
-                        @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
-                            Toast.makeText(MainActivity.this,"Save Successful!", Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onFailure(Call<User> call, Throwable t) {
-                            Toast.makeText(MainActivity.this, "Save Failed!", Toast.LENGTH_SHORT).show();
-                            Logger.getLogger(MainActivity.class.getName()).log(Level.SEVERE, "Error Occured",t);
-                        }
-                    });
+        this.registerButton = findViewById(R.id.registerButton);
+        this.registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, RegisterPage.class);
+                startActivity(intent);
+            }
         });
     }
+
+
 }
