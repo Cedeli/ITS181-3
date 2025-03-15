@@ -1,5 +1,4 @@
 # ITS181-3
 
-gian was here
-Luke was here too
-
+- Springboot for Backend
+- Android Studio for FrontEnd
