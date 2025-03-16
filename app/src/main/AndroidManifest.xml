@@ -13,6 +13,12 @@
         android:theme="@style/Theme.DogAdoption"
         tools:targetApi="31">
         <activity
+            android:name=".ui.LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name="its181.sa3.Test"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
