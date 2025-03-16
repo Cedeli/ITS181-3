@@ -98,6 +98,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private String getUserRole(String email) {
         // TO DO: IMPLEMENT BY GIAN
-        return "admin";
+        return "user";
     }
 }

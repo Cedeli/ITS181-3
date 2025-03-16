@@ -48,11 +48,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerButton.setOnClickListener(v -> registerUser());
 
-        // Set up back button click listener
-        backButton.setOnClickListener(v -> {
-            // Simply finish this activity to go back to the LoginActivity
-            finish();
-        });
+        backButton.setOnClickListener(v -> finish());
     }
 
     private void registerUser() {
