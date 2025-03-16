@@ -17,15 +17,14 @@ import its181.sa3.dogadoption.R;
 import its181.sa3.dogadoption.data.model.Dog;
 
 public class DogListAdapter extends RecyclerView.Adapter<DogListAdapter.DogViewHolder> {
-
     private List<Dog> dogs;
-    private OnAdoptClickListener listener;
+    private OnDetailsClickListener listener;
 
-    public interface OnAdoptClickListener {
-        void onAdoptClick(int position);
+    public interface OnDetailsClickListener {
+        void onDetailsClick(int position);
     }
 
-    public DogListAdapter(List<Dog> dogs, OnAdoptClickListener listener) {
+    public DogListAdapter(List<Dog> dogs, OnDetailsClickListener listener) {
         this.dogs = dogs;
         this.listener = listener;
     }
@@ -52,7 +51,7 @@ public class DogListAdapter extends RecyclerView.Adapter<DogListAdapter.DogViewH
     class DogViewHolder extends RecyclerView.ViewHolder {
         ImageView dogImage;
         TextView dogName, dogBreed, dogAge, adoptedText;
-        Button adoptButton;
+        Button detailsButton;
 
         public DogViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -61,7 +60,7 @@ public class DogListAdapter extends RecyclerView.Adapter<DogListAdapter.DogViewH
             dogBreed = itemView.findViewById(R.id.dogBreed);
             dogAge = itemView.findViewById(R.id.dogAge);
             adoptedText = itemView.findViewById(R.id.adoptedText);
-            adoptButton = itemView.findViewById(R.id.adoptButton);
+            detailsButton = itemView.findViewById(R.id.detailsButton);
         }
 
         void bind(Dog dog, int position) {
@@ -72,15 +71,13 @@ public class DogListAdapter extends RecyclerView.Adapter<DogListAdapter.DogViewH
 
             if (dog.getAdopted()) {
                 adoptedText.setVisibility(View.VISIBLE);
-                adoptButton.setVisibility(View.GONE);
             } else {
                 adoptedText.setVisibility(View.GONE);
-                adoptButton.setVisibility(View.VISIBLE);
             }
 
-            adoptButton.setOnClickListener(v -> {
+            detailsButton.setOnClickListener(v -> {
                 if (listener != null) {
-                    listener.onAdoptClick(position);
+                    listener.onDetailsClick(position);
                 }
             });
         }

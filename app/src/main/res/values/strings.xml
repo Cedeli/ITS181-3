@@ -10,4 +10,9 @@
     <string name="adopt">Adopt</string>
     <string name="confirm_password_placeholder">Confirm Password</string>
     <string name="back_to_login">Back to login</string>
+    <string name="details">Details</string>
+    <string name="breed">Breed:</string>
+    <string name="age">Age:</string>
+    <string name="description">Description:</string>
+    <string name="available">Available</string>
 </resources>

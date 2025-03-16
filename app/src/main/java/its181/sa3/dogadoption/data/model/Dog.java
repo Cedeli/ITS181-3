@@ -6,15 +6,16 @@ public class Dog {
     private String breed;
     private String age;
     private String description;
-    private boolean isAdopted;
+    private boolean adopted;
     private int imageResourceId;
 
-    public Dog(int id, String name, String breed, String age, boolean isAdopted, int imageResourceId) {
+    public Dog(int id, String name, String breed, String age, String description, boolean adopted, int imageResourceId) {
         this.id = id;
         this.name = name;
         this.breed = breed;
         this.age = age;
-        this.isAdopted = isAdopted;
+        this.description = description;
+        this.adopted = adopted;
         this.imageResourceId = imageResourceId;
     }
 
@@ -35,11 +36,11 @@ public class Dog {
     }
 
     public boolean getAdopted() {
-        return isAdopted;
+        return adopted;
     }
 
     public void setAdopted(boolean adopted) {
-        isAdopted = adopted;
+        this.adopted = adopted;
     }
 
     public int getImageResourceId() {

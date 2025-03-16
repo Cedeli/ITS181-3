@@ -29,7 +29,7 @@
             android:layout_marginStart="16dp"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/adoptButton"
+            app:layout_constraintEnd_toStartOf="@+id/detailsButton"
             app:layout_constraintStart_toEndOf="@+id/dogImage"
             app:layout_constraintTop_toTopOf="@+id/dogImage"
             tools:text="Dog Name" />
@@ -41,7 +41,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/adoptButton"
+            app:layout_constraintEnd_toStartOf="@+id/detailsButton"
             app:layout_constraintStart_toEndOf="@+id/dogImage"
             app:layout_constraintTop_toBottomOf="@+id/dogName"
             tools:text="Dog Breed" />
@@ -53,7 +53,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:textSize="14sp"
-            app:layout_constraintEnd_toStartOf="@+id/adoptButton"
+            app:layout_constraintEnd_toStartOf="@+id/detailsButton"
             app:layout_constraintStart_toEndOf="@+id/dogImage"
             app:layout_constraintTop_toBottomOf="@+id/dogBreed"
             tools:text="Dog Age" />
@@ -68,17 +68,16 @@
             android:text="@string/adopted"
             android:visibility="gone"
             android:textColor="@android:color/holo_red_dark"
-            app:layout_constraintEnd_toStartOf="@+id/adoptButton"
+            app:layout_constraintEnd_toStartOf="@+id/detailsButton"
             app:layout_constraintStart_toEndOf="@+id/dogImage"
             app:layout_constraintTop_toBottomOf="@+id/dogAge"
             />
 
         <Button
-            android:id="@+id/adoptButton"
+            android:id="@+id/detailsButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/adopt"
-            android:visibility="visible"
+            android:text="@string/details"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
