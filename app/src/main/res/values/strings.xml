@@ -8,4 +8,5 @@
     <string name="dog_image">Dog Image</string>
     <string name="adopted">Adopted</string>
     <string name="adopt">Adopt</string>
+    <string name="confirm_password_placeholder">Confirm Password</string>
 </resources>
