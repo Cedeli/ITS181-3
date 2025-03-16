@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Dog Adoption</string>
-    <string name="registerPlaceholder">Register</string>
-    <string name="loginTitle">Login</string>
-    <string name="emailPlaceholder">Email</string>
-    <string name="passwordPlaceholder">Password</string>
-    <string name="registerTitle">Register</string>
+    <string name="register_placeholder">Register</string>
+    <string name="login_title">Login</string>
+    <string name="email_placeholder">Email</string>
+    <string name="password_placeholder">Password</string>
+    <string name="register_title">Register</string>
+    <string name="dog_image">Dog Image</string>
+    <string name="adopted">Adopted</string>
+    <string name="adopt">Adopt</string>
 </resources>
