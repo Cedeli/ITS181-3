@@ -2,17 +2,17 @@ package its181.sa3.dogadoption.ui.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +21,7 @@ import its181.sa3.dogadoption.R;
 import its181.sa3.dogadoption.data.model.Dog;
 import its181.sa3.dogadoption.data.remote.DogApiService;
 import its181.sa3.dogadoption.data.remote.RetrofitService;
+import its181.sa3.dogadoption.ui.LoginActivity;
 import its181.sa3.dogadoption.ui.adapter.DogListAdminAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,18 +33,22 @@ public class DogListAdminActivity extends AppCompatActivity implements DogListAd
     private List<Dog> dogList;
     private FloatingActionButton addDogFab;
     private DogApiService dogApiService;
+    private TextView noDogsTextViewAdmin;
+    private Toolbar adminToolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dog_list_admin);
 
-        Toolbar toolbar = findViewById(R.id.adminToolbar);
-        setSupportActionBar(toolbar);
+        adminToolbar = findViewById(R.id.adminToolbar);
+        setSupportActionBar(adminToolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle("Manage Dogs");
 
         recyclerView = findViewById(R.id.adminRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        noDogsTextViewAdmin = findViewById(R.id.noDogsTextViewAdmin);
 
         addDogFab = findViewById(R.id.addDogFab);
         addDogFab.setOnClickListener(v -> {
@@ -68,23 +73,25 @@ public class DogListAdminActivity extends AppCompatActivity implements DogListAd
     }
 
     private void loadDogs() {
-        Call<List<Dog>> call = dogApiService.getAllDogs(null);
+        Call<List<Dog>> call = dogApiService.getAllDogs(null); // Load all dogs for admin
         call.enqueue(new Callback<List<Dog>>() {
             @Override
             public void onResponse(@NonNull Call<List<Dog>> call, @NonNull Response<List<Dog>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    List<Dog> newDogs = response.body();
-                    int oldSize = dogList.size();
                     dogList.clear();
-                    adapter.notifyItemRangeRemoved(0, oldSize);
-                    dogList.addAll(newDogs);
-                    adapter.notifyItemRangeInserted(0, newDogs.size());
+                    dogList.addAll(response.body());
+                    adapter.notifyDataSetChanged();
+
+                    if (dogList.isEmpty()) {
+                        noDogsTextViewAdmin.setVisibility(View.VISIBLE);
+                    } else {
+                        noDogsTextViewAdmin.setVisibility(View.GONE);
+                    }
                 } else {
                     Toast.makeText(DogListAdminActivity.this, "Failed to load dogs: " +
                             (response.errorBody() != null ? response.code() : "Unknown error"), Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
             public void onFailure(@NonNull Call<List<Dog>> call, @NonNull Throwable t) {
                 Toast.makeText(DogListAdminActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
@@ -92,6 +99,7 @@ public class DogListAdminActivity extends AppCompatActivity implements DogListAd
             }
         });
     }
+
 
     @Override
     public void onEditClick(int position) {
@@ -132,5 +140,22 @@ public class DogListAdminActivity extends AppCompatActivity implements DogListAd
                 Toast.makeText(DogListAdminActivity.this, "Network error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_dog_list, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_logout) {
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
