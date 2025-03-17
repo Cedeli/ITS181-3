@@ -66,9 +66,7 @@ public class DogListUserActivity extends AppCompatActivity implements DogListAda
     private void loadDogs() {
         progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(true);
-        // Set to false if adopted dogs need to be hidden.
-        // I was thinking keeping it displayed to show that it has been updated easily.
-        Call<List<Dog>> call = dogApiService.getAllDogs(true);
+        Call<List<Dog>> call = dogApiService.getAllDogs(null);
         call.enqueue(new Callback<List<Dog>>() {
             @Override
             public void onResponse(@NonNull Call<List<Dog>> call, @NonNull Response<List<Dog>> response) {
