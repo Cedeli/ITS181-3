@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.chip.Chip;
 
 import java.util.List;
 
@@ -46,12 +47,6 @@ public class DogListAdminAdapter extends RecyclerView.Adapter<DogListAdminAdapte
         holder.dogBreed.setText(dog.getBreed());
         holder.dogAge.setText(dog.getAge());
 
-        if (dog.getAdopted()) {
-            holder.adoptedText.setVisibility(View.VISIBLE);
-        } else {
-            holder.adoptedText.setVisibility(View.GONE);
-        }
-
         Glide.with(holder.itemView.getContext())
                 .load(dog.getImageUrl())
                 .placeholder(R.drawable.placeholder)
@@ -66,7 +61,7 @@ public class DogListAdminAdapter extends RecyclerView.Adapter<DogListAdminAdapte
 
     static class DogViewHolder extends RecyclerView.ViewHolder {
         ImageView dogImage;
-        TextView dogName, dogBreed, dogAge, adoptedText;
+        TextView dogName, dogBreed, dogAge;
         Button editButton, deleteButton;
 
         public DogViewHolder(@NonNull View itemView, OnDogActionListener listener) {
@@ -75,7 +70,6 @@ public class DogListAdminAdapter extends RecyclerView.Adapter<DogListAdminAdapte
             dogName = itemView.findViewById(R.id.dogName);
             dogBreed = itemView.findViewById(R.id.dogBreed);
             dogAge = itemView.findViewById(R.id.dogAge);
-            adoptedText = itemView.findViewById(R.id.adoptedText);
             editButton = itemView.findViewById(R.id.editButton);
             deleteButton = itemView.findViewById(R.id.deleteButton);
 

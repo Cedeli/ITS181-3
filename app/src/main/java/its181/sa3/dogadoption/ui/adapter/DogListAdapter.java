@@ -51,7 +51,7 @@ public class DogListAdapter extends RecyclerView.Adapter<DogListAdapter.DogViewH
 
     class DogViewHolder extends RecyclerView.ViewHolder {
         ImageView dogImage;
-        TextView dogName, dogBreed, dogAge, adoptedText;
+        TextView dogName, dogBreed, dogAge;
         Button detailsButton;
 
         public DogViewHolder(@NonNull View itemView) {
@@ -60,7 +60,6 @@ public class DogListAdapter extends RecyclerView.Adapter<DogListAdapter.DogViewH
             dogName = itemView.findViewById(R.id.dogName);
             dogBreed = itemView.findViewById(R.id.dogBreed);
             dogAge = itemView.findViewById(R.id.dogAge);
-            adoptedText = itemView.findViewById(R.id.adoptedText);
             detailsButton = itemView.findViewById(R.id.detailsButton);
         }
 
@@ -74,12 +73,6 @@ public class DogListAdapter extends RecyclerView.Adapter<DogListAdapter.DogViewH
                     .placeholder(R.drawable.placeholder)
                     .error(R.drawable.ic_launcher_background)
                     .into(dogImage);
-
-            if (dog.getAdopted()) {
-                adoptedText.setVisibility(View.VISIBLE);
-            } else {
-                adoptedText.setVisibility(View.GONE);
-            }
 
             detailsButton.setOnClickListener(v -> {
                 if (listener != null) {

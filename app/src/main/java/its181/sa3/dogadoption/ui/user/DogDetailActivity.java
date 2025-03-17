@@ -44,8 +44,8 @@ public class DogDetailActivity extends AppCompatActivity {
         dogImageView = findViewById(R.id.detailDogImage);
         adoptButton = findViewById(R.id.detailAdoptButton);
 
-        int dogId = getIntent().getIntExtra("DOG_ID", -1);
-        if (dogId != -1) {
+        long dogId = getIntent().getLongExtra("DOG_ID", -1L);
+        if (dogId != -1L) {
             loadDogData(dogId);
         } else {
             finish();
@@ -61,7 +61,7 @@ public class DogDetailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void loadDogData(int dogId) {
+    private void loadDogData(long dogId) {
         List<Dog> dogList = new ArrayList<>();
         String testImageUrl = "https://preview.redd.it/bwof59fjb2s91.jpg?width=906&format=pjpg&auto=webp&s=33281994eca39e7cc34d733c45a7ca9629207b99";
         dogList.add(new Dog(1L, "Max", "Golden Retriever", "3 years",
@@ -114,7 +114,7 @@ public class DogDetailActivity extends AppCompatActivity {
         updateAdoptionStatus();
 
         Toast.makeText(this,
-                "You've requested to adopt " + dog.getName() + "! Our team will contact you soon.",
+                "You've requested to adopt " + dog.getName() + "! The veterinary office will contact you soon.",
                 Toast.LENGTH_LONG).show();
     }
 }
