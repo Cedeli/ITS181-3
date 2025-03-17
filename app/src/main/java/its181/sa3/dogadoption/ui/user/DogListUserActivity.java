@@ -37,14 +37,16 @@ public class DogListUserActivity extends AppCompatActivity implements DogListAda
     private void initDogData() {
         dogList = new ArrayList<>();
 
-        dogList.add(new Dog(1, "Max", "Golden Retriever", "3 years", "Dog Description", false, R.drawable.ic_launcher_foreground));
-        dogList.add(new Dog(2, "Bella", "Labrador", "2 years", "Dog Description", false, R.drawable.ic_launcher_foreground));
-        dogList.add(new Dog(3, "Charlie", "German Shepherd", "4 years", "Dog Description", true, R.drawable.ic_launcher_foreground));
-        dogList.add(new Dog(4, "Luna", "Husky", "1 year", "Dog Description", false, R.drawable.ic_launcher_foreground));
-        dogList.add(new Dog(5, "Cooper", "Beagle", "5 years", "Dog Description", false, R.drawable.ic_launcher_foreground));
-        dogList.add(new Dog(6, "Lucy", "Poodle", "2 years", "Dog Description", true, R.drawable.ic_launcher_foreground));
-        dogList.add(new Dog(7, "Buddy", "Bulldog", "3 years", "Dog Description", false, R.drawable.ic_launcher_foreground));
-        dogList.add(new Dog(8, "Daisy", "Dachshund", "4 years", "Dog Description", false, R.drawable.ic_launcher_foreground));
+        String testImage = "https://preview.redd.it/bwof59fjb2s91.jpg?width=906&format=pjpg&auto=webp&s=33281994eca39e7cc34d733c45a7ca9629207b99";
+
+        dogList.add(new Dog(1, "Max", "Golden Retriever", "3 years", "Dog Description", false, testImage));
+        dogList.add(new Dog(2, "Bella", "Labrador", "2 years", "Dog Description", false, testImage));
+        dogList.add(new Dog(3, "Charlie", "German Shepherd", "4 years", "Dog Description", true, testImage));
+        dogList.add(new Dog(4, "Luna", "Husky", "1 year", "Dog Description", false, testImage));
+        dogList.add(new Dog(5, "Cooper", "Beagle", "5 years", "Dog Description", false, testImage));
+        dogList.add(new Dog(6, "Lucy", "Poodle", "2 years", "Dog Description", true, testImage));
+        dogList.add(new Dog(7, "Buddy", "Bulldog", "3 years", "Dog Description", false, testImage));
+        dogList.add(new Dog(8, "Daisy", "Dachshund", "4 years", "Dog Description", false, testImage));
     }
 
     @Override

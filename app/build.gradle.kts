@@ -43,4 +43,5 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
     implementation(libs.material.v130)
+    implementation(libs.glide)
 }

@@ -6,10 +6,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -67,7 +68,12 @@ public class DogListAdapter extends RecyclerView.Adapter<DogListAdapter.DogViewH
             dogName.setText(dog.getName());
             dogBreed.setText(dog.getBreed());
             dogAge.setText(dog.getAge());
-            dogImage.setImageResource(dog.getImageResourceId());
+
+            Glide.with(itemView.getContext())
+                    .load(dog.getImageUrl())
+                    .placeholder(R.drawable.placeholder)
+                    .error(R.drawable.ic_launcher_background)
+                    .into(dogImage);
 
             if (dog.getAdopted()) {
                 adoptedText.setVisibility(View.VISIBLE);

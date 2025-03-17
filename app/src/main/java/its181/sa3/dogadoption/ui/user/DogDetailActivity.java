@@ -11,6 +11,8 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -29,13 +31,11 @@ public class DogDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dog_detail);
 
-        // Setup toolbar with back button
         Toolbar toolbar = findViewById(R.id.detailToolbar);
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("");
 
-        // Initialize views
         nameTextView = findViewById(R.id.detailDogName);
         breedTextView = findViewById(R.id.detailDogBreed);
         ageTextView = findViewById(R.id.detailDogAge);
@@ -44,7 +44,6 @@ public class DogDetailActivity extends AppCompatActivity {
         dogImageView = findViewById(R.id.detailDogImage);
         adoptButton = findViewById(R.id.detailAdoptButton);
 
-        // Get dog data
         int dogId = getIntent().getIntExtra("DOG_ID", -1);
         if (dogId != -1) {
             loadDogData(dogId);
@@ -63,11 +62,11 @@ public class DogDetailActivity extends AppCompatActivity {
     }
 
     private void loadDogData(int dogId) {
-        // Example dog data
         List<Dog> dogList = new ArrayList<>();
+        String testImageUrl = "https://preview.redd.it/bwof59fjb2s91.jpg?width=906&format=pjpg&auto=webp&s=33281994eca39e7cc34d733c45a7ca9629207b99";
         dogList.add(new Dog(1, "Max", "Golden Retriever", "3 years",
                 "Friendly and energetic dog who loves to play fetch and socialize with other dogs.",
-                false, R.drawable.ic_launcher_foreground));
+                false, testImageUrl));
 
         for (Dog d : dogList) {
             if (d.getId() == dogId) {
@@ -81,14 +80,18 @@ public class DogDetailActivity extends AppCompatActivity {
     private void displayDogData() {
         if (dog == null) return;
 
-        // Set toolbar title
-        getSupportActionBar().setTitle(dog.getName());
+        Objects.requireNonNull(getSupportActionBar()).setTitle(dog.getName());
 
         nameTextView.setText(dog.getName());
         breedTextView.setText(dog.getBreed());
         ageTextView.setText(dog.getAge());
         descriptionTextView.setText(dog.getDescription());
-        dogImageView.setImageResource(dog.getImageResourceId());
+
+        Glide.with(this)
+                .load(dog.getImageUrl())
+                .placeholder(R.drawable.placeholder)
+                .error(R.drawable.ic_launcher_background)
+                .into(dogImageView);
 
         updateAdoptionStatus();
     }
