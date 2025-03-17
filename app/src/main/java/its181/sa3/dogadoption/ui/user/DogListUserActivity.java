@@ -56,7 +56,7 @@ public class DogListUserActivity extends AppCompatActivity implements DogListAda
         progressBar.setVisibility(View.VISIBLE);
         swipeRefreshLayout.setRefreshing(true);
 
-        Call<List<Dog>> call = dogApiService.getAllDogs(false);
+        Call<List<Dog>> call = dogApiService.getAllDogs(true);
         call.enqueue(new Callback<List<Dog>>() {
             @Override
             public void onResponse(@NonNull Call<List<Dog>> call, @NonNull Response<List<Dog>> response) {

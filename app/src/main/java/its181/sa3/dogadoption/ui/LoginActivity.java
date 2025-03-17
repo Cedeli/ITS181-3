@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
             String userRole = getUserRole(email);
 
             Intent intent;
-            if ("USER".equals(userRole)) {
+            if ("ADMIN".equals(userRole)) {
                 intent = new Intent(LoginActivity.this, DogListAdminActivity.class);
             } else {
                 intent = new Intent(LoginActivity.this, DogListUserActivity.class);
@@ -96,6 +96,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private String getUserRole(String email) {
-        return "ADMIN";
+        return "USER";
     }
 }

@@ -28,7 +28,7 @@ public class DogDetailActivity extends AppCompatActivity {
     private Button adoptButton;
     private DogApiService dogApiService;
     private ProgressBar progressBar;
-    private long dogId; // Store the dog ID
+    private long dogId;
     private Dog dog;
 
 
