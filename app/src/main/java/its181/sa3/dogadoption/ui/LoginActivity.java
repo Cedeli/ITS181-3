@@ -9,7 +9,6 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -127,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                 errorTextView.setText("Network error: " + t.getMessage());
                 errorTextView.setVisibility(View.VISIBLE);
             }
@@ -139,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void redirectToEntrypoint() {
-        String userRole = sharedPreferences.getString(KEY_USER_ROLE, "USER"); // Default to USER
+        String userRole = sharedPreferences.getString(KEY_USER_ROLE, "USER");
         Intent intent;
         if ("ADMIN".equals(userRole)) {
             intent = new Intent(LoginActivity.this, DogListAdminActivity.class);

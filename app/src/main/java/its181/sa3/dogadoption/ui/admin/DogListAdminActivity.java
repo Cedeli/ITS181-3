@@ -73,7 +73,7 @@ public class DogListAdminActivity extends AppCompatActivity implements DogListAd
     }
 
     private void loadDogs() {
-        Call<List<Dog>> call = dogApiService.getAllDogs(null); // Load all dogs for admin
+        Call<List<Dog>> call = dogApiService.getAllDogs(null);
         call.enqueue(new Callback<List<Dog>>() {
             @Override
             public void onResponse(@NonNull Call<List<Dog>> call, @NonNull Response<List<Dog>> response) {

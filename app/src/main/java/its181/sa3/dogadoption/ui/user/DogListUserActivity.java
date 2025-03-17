@@ -36,7 +36,7 @@ public class DogListUserActivity extends AppCompatActivity implements DogListAda
     private DogApiService dogApiService;
     private ProgressBar progressBar;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private TextView noDogsTextView; // Added
+    private TextView noDogsTextView;
     private Toolbar userToolbar;
 
     @Override
@@ -124,7 +124,7 @@ public class DogListUserActivity extends AppCompatActivity implements DogListAda
         if (item.getItemId() == R.id.action_logout) {
             LoginActivity.clearUserSession(this);
             Intent intent = new Intent(this, LoginActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK); // Clear activity stack
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
             return true;
