@@ -1,6 +1,8 @@
 package its181.sa3.dogadoption.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Patterns;
@@ -28,6 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
+
     private TextInputEditText emailEditText;
     private TextInputEditText passwordEditText;
     private TextInputLayout emailInputLayout;
@@ -36,11 +39,26 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private Button registerButton;
     private UserApiService userApiService;
+    private SharedPreferences sharedPreferences;
+    private static final String PREF_NAME = "UserPrefs";
+    private static final String KEY_LOGGED_IN = "isLoggedIn";
+    private static final String KEY_USER_EMAIL = "userEmail";
+    private static final String KEY_USER_ROLE = "userRole";
+    private static final String KEY_USER_ID = "userId";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        sharedPreferences = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+
+        if (isLoggedIn()) {
+            redirectToEntrypoint();
+            finish();
+            return;
+        }
 
         emailEditText = findViewById(R.id.emailEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
@@ -89,15 +107,15 @@ public class LoginActivity extends AppCompatActivity {
                     User user = response.body();
 
                     if (password.equals(user.getPassword())) {
-                        String userRole = user.getRole();
-                        Intent intent;
-                        if ("ADMIN".equals(userRole)) {
-                            intent = new Intent(LoginActivity.this, DogListAdminActivity.class);
-                        } else {
-                            intent = new Intent(LoginActivity.this, DogListUserActivity.class);
-                        }
-                        startActivity(intent);
-                        finish();
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean(KEY_LOGGED_IN, true);
+                        editor.putString(KEY_USER_EMAIL, user.getEmail());
+                        editor.putString(KEY_USER_ROLE, user.getRole());
+                        editor.putLong(KEY_USER_ID, user.getId());
+                        editor.apply();
+
+                        redirectToEntrypoint();
+
                     } else {
                         errorTextView.setText("Invalid email or password");
                         errorTextView.setVisibility(View.VISIBLE);
@@ -109,10 +127,33 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+            public void onFailure(Call<User> call, Throwable t) {
                 errorTextView.setText("Network error: " + t.getMessage());
                 errorTextView.setVisibility(View.VISIBLE);
             }
         });
+    }
+
+    private boolean isLoggedIn() {
+        return sharedPreferences.getBoolean(KEY_LOGGED_IN, false);
+    }
+
+    private void redirectToEntrypoint() {
+        String userRole = sharedPreferences.getString(KEY_USER_ROLE, "USER"); // Default to USER
+        Intent intent;
+        if ("ADMIN".equals(userRole)) {
+            intent = new Intent(LoginActivity.this, DogListAdminActivity.class);
+        } else {
+            intent = new Intent(LoginActivity.this, DogListUserActivity.class);
+        }
+        startActivity(intent);
+        finish();
+    }
+
+    public static void clearUserSession(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
     }
 }
