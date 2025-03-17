@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
@@ -18,7 +19,13 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.Objects;
 
 import its181.sa3.dogadoption.R;
+import its181.sa3.dogadoption.data.model.User;
+import its181.sa3.dogadoption.data.remote.RetrofitService;
+import its181.sa3.dogadoption.data.remote.UserApiService;
 import its181.sa3.dogadoption.ui.user.DogListUserActivity;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity extends AppCompatActivity {
     private TextInputEditText emailEditText;
@@ -30,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button registerButton;
     private ImageButton backButton;
     private TextView errorTextView;
+    private UserApiService userApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +54,10 @@ public class RegisterActivity extends AppCompatActivity {
         backButton = findViewById(R.id.backButton);
         errorTextView = findViewById(R.id.errorTextView);
 
-        registerButton.setOnClickListener(v -> registerUser());
+        RetrofitService retrofitService = new RetrofitService();
+        userApiService = retrofitService.getRetrofit().create(UserApiService.class);
 
+        registerButton.setOnClickListener(v -> registerUser());
         backButton.setOnClickListener(v -> finish());
     }
 
@@ -65,42 +75,48 @@ public class RegisterActivity extends AppCompatActivity {
             emailInputLayout.setError("Email is required");
             return;
         }
-
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             emailInputLayout.setError("Invalid email format");
             return;
         }
-
         if (TextUtils.isEmpty(password)) {
             passwordInputLayout.setError("Password is required");
             return;
         }
-
         if (password.length() < 6) {
             passwordInputLayout.setError("Password must be at least 6 characters");
             return;
         }
-
         if (!password.equals(confirmPassword)) {
             confirmPasswordInputLayout.setError("Passwords do not match");
             return;
         }
 
-        boolean isRegistered = register(email, password);
+        User newUser = new User();
+        newUser.setEmail(email);
+        newUser.setPassword(password);
+        newUser.setRole("USER");
 
-        if (isRegistered) {
-            Toast.makeText(RegisterActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(RegisterActivity.this, DogListUserActivity.class);
-            startActivity(intent);
-            finish();
-        } else {
-            errorTextView.setText("Registration failed. Email may already be in use.");
-            errorTextView.setVisibility(View.VISIBLE);
-        }
-    }
+        Call<User> call = userApiService.registerUser(newUser);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Toast.makeText(RegisterActivity.this, "Registration successful!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(RegisterActivity.this, DogListUserActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    errorTextView.setText("Registration failed. Email may already be in use.");
+                    errorTextView.setVisibility(View.VISIBLE);
+                }
+            }
 
-    private boolean register(String email, String password) {
-        // TO DO: To be implemented by Gian
-        return true;
+            @Override
+            public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                errorTextView.setText("Network error: " + t.getMessage());
+                errorTextView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 }

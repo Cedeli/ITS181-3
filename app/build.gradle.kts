@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "its181.sa3.dogadoption"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

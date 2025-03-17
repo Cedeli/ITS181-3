@@ -18,7 +18,7 @@ public interface UserApiService {
     Call<User> getUserById(@Path("id") Long id);
 
     @POST("/api/users")
-    Call<User> registerUser(@Body User userDTO);
+    Call<User> registerUser(@Body User user);
 
     @GET("/api/users/email/{email}")
     Call<User> getUserByEmail(@Path("email") String email);
