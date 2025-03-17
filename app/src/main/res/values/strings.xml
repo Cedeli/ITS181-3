@@ -15,4 +15,12 @@
     <string name="age">Age:</string>
     <string name="description">Description:</string>
     <string name="available">Available</string>
+    <string name="add_dog">Add Dog</string>
+    <string name="delete">Delete\n</string>
+    <string name="edit">Edit\n</string>
+    <string name="save_dog">Save Dog\n</string>
+    <string name="already_adopted">Adopted</string>
+    <string name="image_url">Image URL</string>
+    <string name="dog_name">Dog Name</string>
+    <string name="update_dog">Update Dog\n</string>
 </resources>

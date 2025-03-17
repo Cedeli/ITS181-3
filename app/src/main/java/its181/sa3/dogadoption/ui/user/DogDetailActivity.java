@@ -64,7 +64,7 @@ public class DogDetailActivity extends AppCompatActivity {
     private void loadDogData(int dogId) {
         List<Dog> dogList = new ArrayList<>();
         String testImageUrl = "https://preview.redd.it/bwof59fjb2s91.jpg?width=906&format=pjpg&auto=webp&s=33281994eca39e7cc34d733c45a7ca9629207b99";
-        dogList.add(new Dog(1, "Max", "Golden Retriever", "3 years",
+        dogList.add(new Dog(1L, "Max", "Golden Retriever", "3 years",
                 "Friendly and energetic dog who loves to play fetch and socialize with other dogs.",
                 false, testImageUrl));
 

@@ -1,4 +1,4 @@
-package its181.sa3.dogadoption.api;
+package its181.sa3.dogadoption.data.remote;
 
 import java.util.List;
 

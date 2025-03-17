@@ -1,7 +1,7 @@
 package its181.sa3.dogadoption.data.model;
 
 public class Dog {
-    private int id;
+    private Long id;
     private String name;
     private String breed;
     private String age;
@@ -9,7 +9,7 @@ public class Dog {
     private boolean adopted;
     private String imageUrl;
 
-    public Dog(int id, String name, String breed, String age, String description, boolean adopted, String imageUrl) {
+    public Dog(Long id, String name, String breed, String age, String description, boolean adopted, String imageUrl) {
         this.id = id;
         this.name = name;
         this.breed = breed;
@@ -19,8 +19,8 @@ public class Dog {
         this.imageUrl = imageUrl;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
